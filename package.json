@@ -1,0 +1,70 @@
+{
+    "name": "dwc_hdi_union",
+    "version": "1.0.0",
+    "description": "A simple CAP project.",
+    "repository": "<Add your repository here>",
+    "license": "UNLICENSED",
+    "private": true,
+    "dependencies": {
+        "@sap/approuter": "^14.1.1",
+        "@sap/cds": "^9.0.4",
+        "@sap/xsenv": "^3.4.0",
+        "@sap/xssec": "^3.2.17",
+        "express": "^4.18.2",
+        "hdb": "^0.19.5",
+        "passport": "^0.6.0"
+    },
+    "devDependencies": {
+        "@cap-js/sqlite": "^2.0.1",
+        "@sap/cds-dk": "^9.0.5",
+        "sqlite3": "^5.1.7"
+    },
+    "scripts": {
+        "start": "cds run"
+    },
+    "eslintConfig": {
+        "extends": "eslint:recommended",
+        "env": {
+            "es2020": true,
+            "node": true,
+            "jest": true,
+            "mocha": true
+        },
+        "globals": {
+            "SELECT": true,
+            "INSERT": true,
+            "UPDATE": true,
+            "DELETE": true,
+            "CREATE": true,
+            "DROP": true,
+            "CDL": true,
+            "CQL": true,
+            "CXL": true,
+            "cds": true
+        },
+        "rules": {
+            "no-console": "off",
+            "require-atomic-updates": "off"
+        }
+    },
+    "cds": {
+        "requires": {
+            "db": {
+                "kind": "sql"
+            },
+            "query": {
+                "limit": {
+                    "default": 1000000,
+                    "max": 1000000
+                }
+            },
+            "uaa": {
+                "kind": "xsuaa"
+            }
+        },
+        "hana": {
+            "deploy-format": "hdbtable",
+            "syntax": "hdi"
+        }
+    }
+}
