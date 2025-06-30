@@ -81,7 +81,7 @@ resources:
     type: com.sap.xs.hdi-container
     parameters:
       config:
-        database_id: ed99bdd4-e520-4773-990c-28d686893808
+        database_id: d1125754-b4b9-4ea4-be8b-5fad593afb3e
         schema: DSP_HDI_MAX
       service: hana # or 'hanatrial' on trial landscapes
       service-plan: hdi-shared
