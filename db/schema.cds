@@ -1,6 +1,6 @@
 namespace DSP;
 
-@cds.persistence.exists 
+ 
 entity TEST_HDI { 
     key FIELD_ONE         : String(3);
     FIELD_TWO         : String(20);
