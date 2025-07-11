@@ -1,5 +1,5 @@
 {
-    "xsappname": "sca_srv",
+    "xsappname": "scap_srv",
     "tenant-mode": "dedicated",
     "description": "Security profile of called application",
     "scopes": [

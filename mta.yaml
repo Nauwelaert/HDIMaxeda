@@ -1,9 +1,9 @@
 ## Generated mta.yaml based on template version 0.4.0
-## appName = dwc_hdi_expose
+## appName = dwc_hdi_max_expose
 ## language=nodejs; multitenant=false
 ## approuter=
 _schema-version: "3.1"
-ID: dwc_hdi_expose
+ID: dwc_hdi_max_expose
 version: 1.0.0
 description: "A simple CAP project."
 parameters:
@@ -18,7 +18,7 @@ build-parameters:
 
 modules:
   # --------------------- SERVER MODULE ------------------------
-  - name: dwc_hdi_expose-srv
+  - name: dwc_hdi_max_expose-srv
     # ------------------------------------------------------------
     type: nodejs
     path: gen/srv
@@ -30,16 +30,16 @@ modules:
       builder: npm-ci
     requires:
       # Resources extracted from CAP configuration
-      - name: dwc_hdi_expose-db
-      - name: dwc_prod_hdi_container
-      - name: cap-samples-uaa
+      - name: dwc_hdi_max_expose-db
+      - name: dwc_qual_hdi_container
+      - name: cap-samp-uaa
     provides:
       - name: srv-api # required by consumers of CAP services (e.g. approuter)
         properties:
           srv-url: ${default-url}
 
   # -------------------- SIDECAR MODULE ------------------------
-  - name: dwc_hdi_expose-db-deployer
+  - name: dwc_hdi_max_expose-db-deployer
     # ------------------------------------------------------------
     type: hdb
     path: gen/db
@@ -50,14 +50,14 @@ modules:
       health-check-timeout: 180
     requires:
       # 'hana' and 'xsuaa' resources extracted from CAP configuration
-      - name: dwc_hdi_expose-db
+      - name: dwc_hdi_max_expose-db
         parameters:
           disk-quota: 4096M
           memory: 2048M
           health-check-timeout: 180
         properties:
           TARGET_CONTAINER: ~{hdi-service-name}
-      - name: dwc_prod_hdi_container
+      - name: dwc_qual_hdi_container
         group: SERVICE_REPLACEMENTS
         properties:
           key: ServiceName_1
@@ -70,27 +70,20 @@ modules:
   #    app-name: cap-samples-db
   #requires:
   #  - name: cap-samples-db
-  # - name: cap-samples-uaa
+  # - name: cap-samp-uaa
 
 resources:
-  # services extracted from CAP configuration
-  # 'service-plan' can be configured via 'cds.requires.<name>.vcap.plan'
-  # ------------------------------------------------------------
-  - name: dwc_hdi_expose-db
-    # ------------------------------------------------------------
-    type: com.sap.xs.hdi-container
+  - name: dwc_hdi_max_expose-db
+    type: org.cloudfoundry.existing-service
     parameters:
-      config:
-        database_id: ed99bdd4-e520-4773-990c-28d686893808
-        schema: DSP_HDI_MAX
-      service: hana # or 'hanatrial' on trial landscapes
-      service-plan: hdi-shared
+      service-name: DSP_HDI_MAX
     properties:
       hdi-service-name: ${service-name}
 
+
   # The user provided service created in BTP to be able to access the DWC space database user
   # ------------------------------------------------------------
-  - name: dwc_prod_hdi_container
+  - name: dwc_qual_hdi_container
     # ------------------------------------------------------------
     type: org.cloudfoundry.existing-service
     parameters:
@@ -106,12 +99,12 @@ resources:
   #   properties:
   #      hdi-service-name: ${service-name}
 
-  - name: cap-samples-uaa
+  - name: cap-samp-uaa
     type: org.cloudfoundry.managed-service
     parameters:
       service: xsuaa
       service-plan: application
       path: ./xs-security.json
       config:
-        xsappname: -${space}
+        xsappname: scap_srv
         tenant-mode: dedicated
