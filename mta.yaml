@@ -76,7 +76,7 @@ resources:
   - name: dwc_hdi_max_expose-db
     type: org.cloudfoundry.existing-service
     parameters:
-      service-name: DSP_HDI_MAX
+      service-name: DSP_HDI_MAX_2
     properties:
       hdi-service-name: ${service-name}
 
